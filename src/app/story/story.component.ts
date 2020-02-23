@@ -17,7 +17,7 @@ export class StoryComponent implements OnInit, DoCheck {
   public searchTimer;
   public pageNumber = 0;
   public delay = 10000;
-  public hasError = false;
+  public hasError;
   @ViewChild('search', { static: true}) searchInput: ElementRef<HTMLInputElement>;
   @ViewChild('modal', { static: true}) modalDialog;
   @ViewChild('fetchPost', { static: true}) fetchDialog;
@@ -29,9 +29,7 @@ export class StoryComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (!this.hasError) {
-      this.updateStoryList();
-    }
+    this.updateStoryList(this.hasError);
   }
 
   /*
@@ -45,40 +43,42 @@ export class StoryComponent implements OnInit, DoCheck {
       this.storyList = data.hits;
       this.filteredList = [...this.storyList];
     }, (err) => {
-      this.hasError = true;
+       this.hasError = true;
+       console.log(err);
     });
   }
 
   /*
     Function Name: updateStoryList();
-    Parameter: Page Number
+    Parameter: One
     Functionality: Fetching records from the server periodically after every 10 seconds
   */
 
-  updateStoryList() {
-    clearTimeout(this.storyTimer);
-    this.storyTimer = setTimeout(() => {
-      if (this.pageNumber >= 50) {
-            this.pageNumber = 1;
-      } else {
-        this.pageNumber++;
+  updateStoryList(error) {
+      clearTimeout(this.storyTimer);
+      if(!error) {
+        this.storyTimer = setTimeout(() => {
+          if (this.pageNumber >= 50) {
+                this.pageNumber = 1;
+          } else {
+            this.pageNumber++;
+          }
+          let isStoryModalOpen = this.modalDialog.isOpen;
+          if (isStoryModalOpen) {
+            isStoryModalOpen = false;
+          }
+          this.fetchDialog.isOpen = true;
+          this.storyService.getStoryList(this.pageNumber).subscribe((data: any) => {
+            this.storyList = data.hits;
+            this.filteredList = [...this.storyList];
+            setTimeout(() => {
+              this.fetchDialog.isOpen = false;
+            }, 3000);
+          }, (err) => {
+            console.log(err);
+          });
+        }, this.delay);
       }
-      const isStoryModalOpen = this.modalDialog.isOpen;
-      if (isStoryModalOpen) {
-        this.modalDialog.isOpen = false;
-      }
-      this.fetchDialog.isOpen = true;
-      this.storyService.getStoryList(this.pageNumber).subscribe((data: any) => {
-        this.storyList = data.hits;
-        this.filteredList = [...this.storyList];
-        setTimeout(() => {
-          this.fetchDialog.isOpen = false;
-        }, 3000);
-      }, (err) => {
-        console.log(err);
-      });
-    }, this.delay);
-
   }
 
   /*
