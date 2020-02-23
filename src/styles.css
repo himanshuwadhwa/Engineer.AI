@@ -1,1 +1,148 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  padding: 60px 0 0;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+}
+
+[class="col"] {
+  flex: 1 0 auto;
+  padding: 0 15px;
+}
+
+/* Utility CSS Start here */
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mx-1 {
+  margin: 0 1rem;
+}
+/* Utility CSS End here */
+.text-center {
+  text-align: center;
+}
+
+
+/* Table CSS Start here */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table>thead>tr>th, .table>tbody>tr>td{
+  padding: .75rem;
+  text-align: left;
+  border-bottom: #ccc solid 1px;
+  word-break: break-all;
+}
+
+.table>tbody>tr:nth-child(2n)>td, .table>thead>tr {
+  background: #f3e5f5;
+}
+
+.table>thead>tr>th:nth-child(1), .table>tbody>tr>td:nth-child(1),
+.table>thead>tr>th:nth-child(2), .table>tbody>tr>td:nth-child(2) {
+  width: 400px;
+}
+
+/* Table CSS End here */
+
+.form-control {
+  width: 100%;
+  border: #ccc solid 1px;
+  padding: 10px 12px;
+  font-size: 16px;
+}
+
+
+.list-unstyled {
+  list-style: none;
+  padding: 0;
+}
+
+.list-inline>li {
+  display: inline-flex;
+}
+
+.tag {
+  padding: 2px 8px;
+  background: #f3e5f5;
+  margin:0 5px 0 0;
+}
+
+.update-record +.times {
+  display: none;
+}
+
+/* Loader CSS End here */
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+}
+.lds-dual-ring:after {
+  content: ' ';
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid #4a148c;
+  border-color: #4a148c transparent #4a148c transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Loader CSS End here */
+
+/* Media Query if the width is below or equal to 900px */
+@media(max-width: 900px) {
+
+.table>thead>tr>th:nth-child(1), .table>tbody>tr>td:nth-child(1),
+.table>thead>tr>th:nth-child(2), .table>tbody>tr>td:nth-child(2) {
+  width: 200px;
+}
+
+}
+
+/* Media Query if the width is below or equal to 600px */
+@media(max-width: 600px) {
+
+  .table>thead>tr>th:nth-child(1), .table>tbody>tr>td:nth-child(1),
+  .table>thead>tr>th:nth-child(2), .table>tbody>tr>td:nth-child(2) {
+    width: 120px;
+  }
+
+ }

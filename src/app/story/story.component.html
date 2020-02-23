@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row mt-2">
+    <div class="col">
+      <input type="text" #search class="form-control" (keyup)="debounce()" placeholder="Search by title...">
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Url</th>
+              <th>Author</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="storyList; then storyData else error"></ng-container>
+            <ng-template #storyData>
+              <tr *ngFor="let story of storyList" (click)="openModal(story)">
+                <td>{{story.title}}</td>
+                <td>{{story.url}}</td>
+                <td>{{story.author}}</td>
+                <td>{{story.created_at | date: 'mediumDate'}}</td>
+              </tr>
+            </ng-template>
+            <ng-template #error>
+              <tr>
+                <td colspan="4">Something went wrong</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal #modal>
+  <h3 class="title">Story Detail</h3>
+  <div class="body" *ngIf="story">
+    <h3> {{story.title}} </h3>
+    <p> {{story.author}} <span class="mx-1">|</span>  {{story.created_at | date: 'mediumDate'}}</p>
+    <h3 *ngIf="story._tags.length > 0">Tags</h3>
+    <ul class="list-unstyled list-inline">
+      <li class="tag" *ngFor="let tag of story._tags">{{tag}}</li>
+    </ul>
+  </div>
+</app-modal>
+
+<app-modal #fetchPost>
+  <h3 class="title update-record">Updating Record</h3>
+  <div class="body text-center">
+    <i class="lds-dual-ring"></i>
+    <h3>Fetching latest story list from the server...</h3>
+  </div>
+</app-modal>
