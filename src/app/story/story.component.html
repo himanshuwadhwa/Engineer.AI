@@ -27,7 +27,7 @@
               </tr>
             </ng-template>
             <ng-template #error>
-              <tr>
+              <tr *ngIf="storyList">
                 <td colspan="4">Something went wrong</td>
               </tr>
             </ng-template>
